@@ -1,10 +1,21 @@
-import { useRef } from 'react'
+import {useRef} from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { ItemTypes } from '../itemTypes/ItemTypes'
 import cl from './Table.module.css'
 
 
-export const Table = ({ id, name, address, zipcode, index, moveRow }) => {
+export const TableRow = ({
+      index,
+      nr,
+      id,
+      title,
+      url,
+      icon,
+      display,
+      position,
+      action,
+      moveRow
+}) => {
     const ref = useRef(null)
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.ROW,
@@ -49,10 +60,15 @@ export const Table = ({ id, name, address, zipcode, index, moveRow }) => {
     const opacity = isDragging ? 0 : 1
     drag(drop(ref))
     return (
-            <tr ref={ref} style={{opacity}} data-handler-id={handlerId}>
-                <td className={cl.MyTableRow} >{name}</td>
-                <td className={cl.MyTableRow} >{address}</td>
-                <td className={cl.MyTableRow} >{zipcode}</td>
+            <tr className={cl.MyTableRow} ref={ref} style={{opacity}} data-handler-id={handlerId}>
+                <td>{nr}</td>
+                <td>{id}</td>
+                <td>{title}</td>
+                <td>{url}</td>
+                <td>{display}</td>
+                <td>{icon}</td>
+                <td>{position}</td>
+                <td>{action}</td>
             </tr>
     )
 }
