@@ -10,11 +10,6 @@ const MenuRow = (props) => {
                     {props.post.display}
                 </div>
             </div>
-            <div>
-                <MyButton onClick={() => props.remove(props.post)}>
-                    Удалить
-                </MyButton>
-            </div>
         </div>
     );
 };

@@ -1,22 +1,26 @@
-import {useRef} from 'react'
+import React, {useRef, useState} from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { ItemTypes } from '../itemTypes/ItemTypes'
 import cl from './Table.module.css'
+import MyButton from "../UI/MyButton/MyButton";
 
 
 export const TableRow = ({
       index,
-      nr,
       id,
       title,
       url,
       icon,
       display,
       position,
-      action,
-      moveRow
+      moveRow,
+      onDeleteRow
 }) => {
     const ref = useRef(null)
+    // const deleteRow = (e) => {
+    //     onDeleteRow(...this.props.delete)
+    // }
+
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.ROW,
         collect(monitor) {
@@ -59,16 +63,44 @@ export const TableRow = ({
     })
     const opacity = isDragging ? 0 : 1
     drag(drop(ref))
+
+    const [menuRow, unsetMenuRow] = useState({
+        id: '',
+        title: '',
+        url: '',
+        icon: '',
+        display: '',
+        position: ''
+    });
+
+    const deleteMenuRow = () => {
+        onDeleteRow(menuRow, () => unsetMenuRow({
+            id: ' ',
+            title: ' ',
+            url: ' ',
+            icon: ' ',
+            display: ' ',
+            position: ' '
+        }))
+    }
+
     return (
-            <tr className={cl.MyTableRow} ref={ref} style={{opacity}} data-handler-id={handlerId}>
-                <td>{nr}</td>
+            <tr className={cl.MyTableRow} key={id} ref={ref} style={{opacity}} data-handler-id={handlerId}>
+                <td>{index + 1}</td>
                 <td>{id}</td>
                 <td>{title}</td>
                 <td>{url}</td>
                 <td>{display}</td>
                 <td>{icon}</td>
                 <td>{position}</td>
-                <td>{action}</td>
+                <td>
+                    <MyButton>
+                        Edit
+                    </MyButton>
+                    <MyButton onClick={deleteMenuRow}>
+                        Удалить
+                    </MyButton>
+                </td>
             </tr>
     )
 }

@@ -2,36 +2,27 @@ import React, {useState} from 'react';
 import MyInput from "./UI/input/MyInput";
 import MyButton from "./UI/MyButton/MyButton";
 
-const MenuForm = ({create}) => {
+const MenuForm = ({ onAddRow }) => {
     const [menuRow, setMenuRow] = useState({
-        nr: '',
         id: '',
         title: '',
         url: '',
         icon: '',
         display: '',
-        position: '',
-        action: ''
-    })
+        position: ''
+    });
 
     const addMenuRow = (e) => {
-        e.preventDefault()
-        const newMenuRow = {
-            ...menuRow, id: Date.now()
-        }
-        create(newMenuRow)
-        setMenuRow({
-            nr: '',
+        e.preventDefault();
+        onAddRow(menuRow, () => setMenuRow({
             id: '',
             title: '',
             url: '',
             icon: '',
             display: '',
-            position: '',
-            action: ''
-        })
+            position: ''
+        }));
     }
-
 
     return (
         <div>
@@ -49,10 +40,22 @@ const MenuForm = ({create}) => {
                     placeholder="линк поста"
                 />
                 <MyInput
+                    value={menuRow.icon}
+                    onChange={e => setMenuRow({...menuRow, icon: e.target.value})}
+                    type="text"
+                    placeholder="icon"
+                />
+                <MyInput
                     value={menuRow.display}
                     onChange={e => setMenuRow({...menuRow, display: e.target.value})}
+                    type='checkbox'
+                    label="display"
+                />
+                <MyInput
+                    value={menuRow.position}
+                    onChange={e => setMenuRow({...menuRow, position: e.target.value})}
                     type="text"
-                    placeholder="display"
+                    placeholder="position"
                 />
                 <MyButton onClick={addMenuRow}>Add Menu</MyButton>
             </form>
