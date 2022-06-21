@@ -40,7 +40,7 @@ export const TableContainer = ({ menuRows }) => {
             )
 
         }, [])
-        const renderRow = useCallback((menuRow, index) => {
+        const renderRow = useCallback((index) => {
             return (
                <tbody>
                    <TableRow
@@ -61,7 +61,7 @@ export const TableContainer = ({ menuRows }) => {
         return (
             <table>
                 <TableHead/>
-                {menuRows.map((menuRow, i) => renderRow(menuRow, i))}
+                {menuRows.map((i) => renderRow(i))}
             </table>
         )
 }

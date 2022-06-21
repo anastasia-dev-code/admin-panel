@@ -8,8 +8,12 @@ const MenuForm = ({ onAddRow }) => {
         title: '',
         url: '',
         icon: '',
-        display: '',
-        position: ''
+        display: false,
+        position: '',
+        onText: '',
+        offText: '',
+        togglePreference: '',
+        animal: ''
     });
 
     const addMenuRow = (e) => {
@@ -19,12 +23,38 @@ const MenuForm = ({ onAddRow }) => {
             title: '',
             url: '',
             icon: '',
-            display: '',
-            position: ''
+            display: false,
+            position: '',
+            onText: '',
+            offText: '',
+            togglePreference: '',
+            animal: ''
         }));
     }
 
-    return (
+    // const [checked, setChecked] = useState(false);
+    // const handleChange = (e) => {
+    //     setChecked(!checked);
+    // };
+    function Checkbox(menuRow) {
+
+        const [checked, setChecked] = useState(false);
+        const checkedText = menuRow.onText;
+        const uncheckedText = menuRow.offText;
+        const togglePreference = menuRow.togglePreference;
+        const animal = menuRow.animal;
+
+        const handleChange = () => {
+
+            setChecked(!checked);
+            togglePreference(animal);
+
+        };
+    }
+
+
+
+        return (
         <div>
             <form>
                 <MyInput
@@ -47,8 +77,8 @@ const MenuForm = ({ onAddRow }) => {
                 />
                 <MyInput
                     value={menuRow.display}
-                    onChange={e => setMenuRow({...menuRow, display: e.target.value})}
-                    type='checkbox'
+                    display={checked ? checkedText : uncheckedText}
+                    type="checkbox"
                     label="display"
                 />
                 <MyInput
