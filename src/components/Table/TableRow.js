@@ -10,8 +10,8 @@ export const TableRow = ({
       id,
       title,
       url,
-      icon,
       display,
+      icon,
       position,
       moveRow,
       onDeleteRow
@@ -68,8 +68,8 @@ export const TableRow = ({
         id: '',
         title: '',
         url: '',
-        icon: '',
         display: '',
+        icon: '',
         position: ''
     });
 
@@ -78,8 +78,8 @@ export const TableRow = ({
             id: ' ',
             title: ' ',
             url: ' ',
-            icon: ' ',
             display: ' ',
+            icon: ' ',
             position: ' '
         }))
     }

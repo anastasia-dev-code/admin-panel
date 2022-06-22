@@ -33,7 +33,7 @@ function App() {
             <MenuForm onAddRow={onAddRow}/>
         </MyModal>
         <DndProvider backend={HTML5Backend}>
-            <TableContainer menuRows={menuRows} />
+            <TableContainer key={Math.floor(Math.random() * (1000000 - 1)) + 1} menuRows={menuRows} />
          </DndProvider>
     </div>
   );

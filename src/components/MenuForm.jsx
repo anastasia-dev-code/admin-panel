@@ -10,10 +10,6 @@ const MenuForm = ({ onAddRow }) => {
         icon: '',
         display: false,
         position: '',
-        onText: '',
-        offText: '',
-        togglePreference: '',
-        animal: ''
     });
 
     const addMenuRow = (e) => {
@@ -25,32 +21,32 @@ const MenuForm = ({ onAddRow }) => {
             icon: '',
             display: false,
             position: '',
-            onText: '',
-            offText: '',
-            togglePreference: '',
-            animal: ''
         }));
     }
 
     // const [checked, setChecked] = useState(false);
-    // const handleChange = (e) => {
-    //     setChecked(!checked);
-    // };
-    function Checkbox(menuRow) {
-
-        const [checked, setChecked] = useState(false);
-        const checkedText = menuRow.onText;
-        const uncheckedText = menuRow.offText;
-        const togglePreference = menuRow.togglePreference;
-        const animal = menuRow.animal;
-
-        const handleChange = () => {
-
-            setChecked(!checked);
-            togglePreference(animal);
-
-        };
+    const handleChange = (e) => {
+        setMenuRow({...menuRow, display: e.target.value = true })
     }
+    //     setMenuRow({...menuRow, display: e.target.value = true})
+    //
+    //
+    // };
+    // function Checkbox(menuRow) {
+    //
+    //     const [checked, setChecked] = useState(false);
+    //     const checkedText = menuRow.onText;
+    //     const uncheckedText = menuRow.offText;
+    //     const togglePreference = menuRow.togglePreference;
+    //     const animal = menuRow.animal;
+    //
+    //     const handleChange = () => {
+    //
+    //         setChecked(!checked);
+    //         togglePreference(animal);
+    //
+    //     };
+    // }
 
 
 
@@ -70,16 +66,18 @@ const MenuForm = ({ onAddRow }) => {
                     placeholder="линк поста"
                 />
                 <MyInput
+                    value={menuRow.display}
+                    // display={checked ? checkedText : uncheckedText}
+                    onClick={handleChange}
+                    onChange={e => setMenuRow({...menuRow, display: e.target.value})}
+                    type="checkbox"
+                    label="display"
+                />
+                <MyInput
                     value={menuRow.icon}
                     onChange={e => setMenuRow({...menuRow, icon: e.target.value})}
                     type="text"
                     placeholder="icon"
-                />
-                <MyInput
-                    value={menuRow.display}
-                    display={checked ? checkedText : uncheckedText}
-                    type="checkbox"
-                    label="display"
                 />
                 <MyInput
                     value={menuRow.position}

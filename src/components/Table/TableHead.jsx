@@ -9,8 +9,8 @@ const TableHead = () => {
                   <th>ID</th>
                   <th>Title</th>
                   <th>Url</th>
-                  <th>Icon</th>
                   <th>Display</th>
+                  <th>Icon</th>
                   <th>Position</th>
                   <th>Action</th>
               </tr>

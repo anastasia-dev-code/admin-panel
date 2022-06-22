@@ -40,12 +40,12 @@ export const TableContainer = ({ menuRows }) => {
             )
 
         }, [])
-        const renderRow = useCallback((index) => {
+        const renderRow = useCallback((menuRow, index, i) => {
             return (
-               <tbody>
+               <tbody key={Math.floor(Math.random() * (1000000 - 1)) + 1}>
                    <TableRow
+                       key={Math.floor(Math.random() * (1000000 - 1)) + 1}
                        id={menuRow.id}
-                       key={menuRow.id}
                        index={index}
                        title={menuRow.title}
                        url={menuRow.url}
@@ -59,9 +59,9 @@ export const TableContainer = ({ menuRows }) => {
             )
         }, [moveRow])
         return (
-            <table>
-                <TableHead/>
-                {menuRows.map((i) => renderRow(i))}
+            <table key={Math.floor(Math.random() * (1000000 - 1)) + 1}>
+                <TableHead key={Math.floor(Math.random() * (1000000 - 1)) + 1}/>
+                {menuRows.map((i, index, menuRow) => renderRow(i, index, menuRow))}
             </table>
         )
 }
