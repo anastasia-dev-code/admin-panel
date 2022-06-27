@@ -1,67 +1,57 @@
 import update from 'immutability-helper'
 import {useCallback, useState} from 'react'
-import { TableRow } from '../Table/TableRow.js'
+import TableRow from '../Table/TableRow.jsx'
 import TableHead from "./TableHead";
-export const TableContainer = ({ menuRows }) => {
-       const [menuRow, setMenuRow] = useState([{menuRows}])
-       //      nr: '',
-       //      id: '',
-       //      title: '',
-       //      url: '',
-       //      icon: '',
-       //      display: '',
-       //      position: '',
-       //      action: ''
-       //      }]
-       //  )
-        // const [isLoaded, setIsLoaded] = useState(false);
-        // useEffect(() => {
-        //     fetch("http://restapi.adequateshop.com/api/Metadata/GetEmployees")
-        //         .then(res => res.json())
-        //         .then(
-        //             (result) => {
-        //                 setIsLoaded(true);
-        //                 setRows(result);
-        //             },
-        //             (error) => {
-        //                 setIsLoaded(true);
-        //                 setRows(error);
-        //             }
-        //         )
-        //}, [])
-        const moveRow = useCallback((dragIndex, hoverIndex) => {
-            setMenuRow((prevRows) =>
-                update(prevRows, {
-                    $splice: [
-                        [dragIndex, 1],
-                        [hoverIndex, 0, prevRows[dragIndex]],
-                    ],
-                }),
-            )
+import _uniqueId from 'lodash/uniqueId';
+import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 
-        }, [])
+ const TableContainer = ({ menuRows }) => {
+        const [menuRow, setMenuRow] = useState([{menuRows}])
+        const uniqueId = (prefix = 'id-') =>
+            prefix + Math.random().toString(16).slice(-4)
+        const removePost = (menuRow) => {
+            setMenuRow(menuRow.filter(p => p.id !== menuRow.id))
+        }
         const renderRow = useCallback((menuRow, index, i) => {
             return (
-               <tbody key={Math.floor(Math.random() * (1000000 - 1)) + 1}>
-                   <TableRow
-                       key={Math.floor(Math.random() * (1000000 - 1)) + 1}
-                       id={menuRow.id}
-                       index={index}
-                       title={menuRow.title}
-                       url={menuRow.url}
-                       display={menuRow.display}
-                       icon={menuRow.icon}
-                       position={menuRow.position}
-                       action={menuRow.action}
-                       moveRow={moveRow}
-                   />
-               </tbody>
+               <TableRow
+                   remove={removePost}
+                   key={uniqueId}
+                   menuRow={menuRow}
+                   id={uniqueId}
+                   index={index}
+                   title={menuRow.title}
+                   url={menuRow.url}
+                   display={menuRow.display}
+                   icon={menuRow.icon}
+                   position={menuRow.position}
+                   action={menuRow.action}
+               />
             )
-        }, [moveRow])
+        }, [])
+
+        // onDragEnd = result => {
+        //     //TO DO
+        // }
+
         return (
-            <table key={Math.floor(Math.random() * (1000000 - 1)) + 1}>
-                <TableHead key={Math.floor(Math.random() * (1000000 - 1)) + 1}/>
-                {menuRows.map((i, index, menuRow) => renderRow(i, index, menuRow))}
-            </table>
+            <DragDropContext /*onDragEnd={this.onDragEnd}*/>
+                <table key={uniqueId}>
+                    <TableHead key={uniqueId}/>
+                        <Droppable droppableId={menuRow.id}>
+                            {(provided) => (
+                                <tbody key={uniqueId}
+                                       innerRef={provided.innerRef}
+                                       {...provided.droppableProps}
+                                >
+                                        {menuRows.map((i, index, menuRow) => renderRow(i, index, menuRow))}
+                                    {provided.placeholder}
+                                </tbody>
+                            )}
+                        </Droppable>
+                </table>
+            </DragDropContext>
         )
 }
+
+export default TableContainer

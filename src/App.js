@@ -1,4 +1,4 @@
-import {TableContainer} from "./components/Table/TableContainer";
+import TableContainer from "./components/Table/TableContainer";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import MenuForm from "./components/MenuForm";
